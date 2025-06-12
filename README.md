@@ -56,5 +56,10 @@
 
 ---
 
-📌 Stay tuned as I build out each module and share my progress here and on [LinkedIn](#)!
+## High Level Design Of the Application
+![High Level Design](./assets/HLD.png)
+
+
+
+📌 Stay tuned as I build out each module and share my progress here and on [LinkedIn](https://www.linkedin.com/in/phanidhar-reddy-guttikonda-321817233/)!
 
