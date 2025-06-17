@@ -16,6 +16,15 @@ func main() {
 	log.Println("<UNK> Connected to RDS successfully!")
 	connection := db.RdbsConnection()
 	log.Println(connection)
+
+	// let's establish the connection
+	err := connection.Ping()
+	if err != nil {
+		log.Fatalf("failed to connect to RDS: %v", err)
+	} else {
+		log.Println("No Error Occured")
+	}
+
 	log.Println("<UNK> Connected to RDS successfully!")
 	r.GET("/", func(c *gin.Context) {
 		log.Println("Called the base resource")
