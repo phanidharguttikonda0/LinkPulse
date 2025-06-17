@@ -1,11 +1,14 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"database/sql"
+	"github.com/gin-gonic/gin"
+)
 
-func SignIn(c *gin.Context) {
-
+func SignIn(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {}
 }
 
-func SignUp(c *gin.Context) {
-	
+func SignUp(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {}
 }
