@@ -3,9 +3,10 @@ CREATE TABLE Users (
                        id SERIAL PRIMARY KEY,
                        mail_id TEXT UNIQUE NOT NULL,
                        mobile VARCHAR(13) UNIQUE NOT NULL,
+                       username VARCHAR(25) UNIQUE NOT NULL,
                        password VARCHAR(20) NOT NULL,
-                       premium VARCHAR(1) NOT NULL,
-                       expiry Date NOT NULL,
+                       premium VARCHAR(1),
+                       expiry Date,
                        totalspace_consumed FLOAT NOT NULL DEFAULT 0
 );
 
