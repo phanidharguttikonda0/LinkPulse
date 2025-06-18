@@ -60,11 +60,11 @@ func RdbsConnection() *sql.DB {
 
 	// PostgreSQL DSN
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=require",
-		creds.Host, creds.Port, creds.Username, creds.Password, creds.DBName)
+		creds.Host, creds.Port, creds.Username, creds.Password, "linkpulse")
 
-	//log.Println("The dsn was below ------------------------")
-	//log.Println(dsn)
-	//log.Println("The dsn was above -------------------------")
+	log.Println("The dsn was below ------------------------")
+	log.Println(dsn)
+	log.Println("The dsn was above -------------------------")
 	db, err := sql.Open("postgres", dsn)
 	// here a connection was created not yet established
 	if err != nil {
