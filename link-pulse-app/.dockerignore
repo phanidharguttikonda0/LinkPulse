@@ -1,0 +1,11 @@
+# Ignore dev/test files
+Dockerfile
+.dockerignore
+*.md
+*.log
+*.bash
+*.sh
+/tests
+.git
+.vscode
+*.swp
