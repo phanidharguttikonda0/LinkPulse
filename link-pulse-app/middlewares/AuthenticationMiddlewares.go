@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-func AuthorizationCheck(jwtSecret string, authorizationHeader string) (jwt.MapClaims, error) {
+func AuthorizationCheck(secret string, authorizationHeader string) (jwt.MapClaims, error) {
+	jwtSecret := []byte(secret)
 	token, err := jwt.Parse(authorizationHeader, func(token *jwt.Token) (interface{}, error) {
 		// validating signing method
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -27,7 +28,8 @@ func AuthorizationCheck(jwtSecret string, authorizationHeader string) (jwt.MapCl
 	return claims, nil
 }
 
-func CreateAuthorizationHeader(jwtSecret string, userId int, username string) (string, error) {
+func CreateAuthorizationHeader(secret string, userId int, username string) (string, error) {
+	jwtSecret := []byte(secret)
 	claims := jwt.MapClaims{
 		"username": username,
 		"userId":   userId,

@@ -47,7 +47,7 @@ func isValid(regex *regexp.Regexp, s string) bool {
 }
 
 // SignInValidation validates user sign-in credentials
-func (signIn *User) SignInValidation() (bool, error) {
+func (signIn *User) TestSignInValidation() (bool, error) {
 	if isValid(UsernameRegex, signIn.Username) {
 		if len(signIn.Password) >= 8 {
 			return true, nil
