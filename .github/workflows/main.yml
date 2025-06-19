@@ -55,7 +55,10 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ec2-key.pem
         chmod 600 ec2-key.pem
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
-          docker pull ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG || exit 1
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+          docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+          docker pull ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+
 
           # Stop and remove old container
           docker stop $CONTAINER_NAME || true
