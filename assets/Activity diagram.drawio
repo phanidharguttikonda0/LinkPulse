@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.0.9">
+  <diagram name="Page-1" id="DnfFIm5SRzOMC3KSrIKL">
+    <mxGraphModel dx="793" dy="393" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qwOevBWws_3wbPYmrsdc-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="480" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="390" y="460" />
+              <mxPoint x="160" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="609.48" y="480" as="targetPoint" />
+            <mxPoint x="319.48" y="460" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-1" target="qwOevBWws_3wbPYmrsdc-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-1" value="Sign in / Sign up" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="410" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="69.99999999999989" y="540" as="targetPoint" />
+            <mxPoint x="149.9999999999999" y="500" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="150" y="520" />
+              <mxPoint x="70" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-4" value="Web-Site Url DashBoard" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="480" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-5" target="qwOevBWws_3wbPYmrsdc-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-5" value="Files Dashboard" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="480" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-7" value="Shorten Url" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="540" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-8" value="Urls List with insights" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="540" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.6;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-4" target="qwOevBWws_3wbPYmrsdc-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-10" value="File Sharing by Uploading File" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="530" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-12" value="List of Files Shared and Insights" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="530" width="146" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.478;entryY=-0.021;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-5" target="qwOevBWws_3wbPYmrsdc-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-14" target="qwOevBWws_3wbPYmrsdc-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="392.5" y="610" as="targetPoint" />
+            <mxPoint x="397.5" y="540" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="397.5" y="575" />
+              <mxPoint x="392.5" y="575" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="qwOevBWws_3wbPYmrsdc-14" target="qwOevBWws_3wbPYmrsdc-21">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-14" value="Profile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="530" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-17" value="Purchased&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="610" width="110" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-19" value="Buy Premium features" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="610" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="qwOevBWws_3wbPYmrsdc-21" value="Reset Password" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="610" width="120" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
