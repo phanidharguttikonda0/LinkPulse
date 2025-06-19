@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-func SignIn(db *sql.DB) gin.HandlerFunc {
+func SignIn(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		log.Println("Sign In Handler, Going to Call Validations")
@@ -35,7 +35,7 @@ func SignIn(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		log.Println("Sign In Service Successfully, Going to Authorization header")
-		authorizationHeader, err := middlewares.CreateAuthorizationHeader(id, data.Username)
+		authorizationHeader, err := middlewares.CreateAuthorizationHeader(jwtSecret, id, data.Username)
 		if err != nil {
 			log.Printf("Authorization error : %v\n", err)
 			c.JSON(400, gin.H{"error": err})
@@ -47,7 +47,7 @@ func SignIn(db *sql.DB) gin.HandlerFunc {
 	}
 }
 
-func SignUp(db *sql.DB) gin.HandlerFunc {
+func SignUp(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		log.Println("Sign Up Handler, Going to Call Validations")
 		var data models.NewUser
@@ -67,7 +67,7 @@ func SignUp(db *sql.DB) gin.HandlerFunc {
 		log.Println("Stored User Successfully")
 		log.Println("Going to get Authorization Header")
 
-		authorizationHeader, err := middlewares.CreateAuthorizationHeader(id, data.Username)
+		authorizationHeader, err := middlewares.CreateAuthorizationHeader(jwtSecret, id, data.Username)
 		if err != nil {
 			log.Printf("Authorization error : %v\n", err)
 			c.JSON(400, gin.H{"error": err})

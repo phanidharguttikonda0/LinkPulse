@@ -8,15 +8,14 @@ import (
 	"github.com/phanidharguttikonda0/LinkPulse/routes"
 	_ "github.com/phanidharguttikonda0/LinkPulse/routes"
 	"log"
-	"net/http"
 )
 
 func main() {
 	r := gin.Default()
 
 	log.Println("<UNK> Connected to RDS successfully!")
-	connection := db.RdbsConnection()
-	log.Println(connection)
+	connection, jwtSecret := db.DatabaseConnections()
+	// log.Println(connection)
 
 	// let's establish the connection
 	err := connection.Ping()
@@ -33,23 +32,7 @@ func main() {
 		}
 	}(connection)
 
-	log.Println("<UNK> Connected to RDS successfully!")
-
-	routes.AuthenticationRoutes(r, connection) // for each route we are going to pass the database connection from here
-
-	r.GET("/", func(c *gin.Context) {
-		log.Println("Called the base resource")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello from Gin!",
-		})
-	})
-
-	r.GET("/CICD", func(c *gin.Context) {
-		log.Println("CICD Completed, Let's Check, i think now it's gonna work, i think let's see hurr")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "This was updated via CI/CD",
-		})
-	})
+	routes.AuthenticationRoutes(r, connection, jwtSecret) // for each route we are going to pass the database connection from here
 
 	// Start server
 	r.Run(":8080") // default listens on 0.0.0.0:8080

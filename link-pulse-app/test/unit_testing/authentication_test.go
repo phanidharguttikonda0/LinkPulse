@@ -9,11 +9,11 @@ import (
 )
 
 func TestAuthorizationCheck(t *testing.T) {
-	token, err := middlewares.CreateAuthorizationHeader(1, "phani")
+	token, err := middlewares.CreateAuthorizationHeader("hehe", 1, "phani")
 	if err != nil {
 		t.Errorf("Error creating token: %v", err)
 	}
-	claims, err := middlewares.AuthorizationCheck(token)
+	claims, err := middlewares.AuthorizationCheck("hehe", token)
 	if err != nil {
 		t.Errorf("Error verifying token: %v", err)
 	}

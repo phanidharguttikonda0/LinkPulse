@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -22,7 +23,11 @@ type RDSCredentials struct {
 	DBName   string `json:"dbname"`
 }
 
-func RdbsConnection() *sql.DB {
+type JWT struct {
+	jwt_secret string
+}
+
+func DatabaseConnections() (*sql.DB, string) {
 	secretName := "rds/psql/main"
 	region := "ap-south-1"
 
@@ -47,6 +52,28 @@ func RdbsConnection() *sql.DB {
 		VersionStage: aws.String("AWSCURRENT"),
 	}
 	// here we are mentioning the secret id to get the specific details
+
+	jwt_input := &secretsmanager.GetSecretValueInput{
+		SecretId:     aws.String("jwt/secret"),
+		VersionStage: aws.String("AWSCURRENT"),
+	}
+
+	jwt, err := svc.GetSecretValue(context.TODO(), jwt_input)
+	if err != nil {
+		log.Fatalf("failed to get secret-key of jwt: %v", err)
+	}
+
+	// Decrypts secret using the associated KMS key.
+	var secretString string = *jwt.SecretString
+
+	//log.Println("jwt secret string was ------------")
+	//log.Println(secretString)
+	secretString = strings.Split(secretString, ":")[1]
+	secretString = strings.Replace(secretString, "\"", "", -1)
+	secretString = strings.Replace(secretString, "}", "", -1)
+	secretString = strings.TrimSpace(secretString)
+	//log.Println("jwt secret string was ------------", secretString)
+	//log.Println("-------------------------------------")
 
 	result, err := svc.GetSecretValue(context.TODO(), input)
 	if err != nil {
@@ -76,7 +103,7 @@ func RdbsConnection() *sql.DB {
 	}
 
 	log.Println("🔗 Connected to RDS successfully!")
-	return db
+	return db, secretString
 }
 
 /*
