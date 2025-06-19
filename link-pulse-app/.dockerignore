@@ -5,7 +5,7 @@ Dockerfile
 *.log
 *.bash
 *.sh
-/tests
+/test
 .git
 .vscode
 *.swp
