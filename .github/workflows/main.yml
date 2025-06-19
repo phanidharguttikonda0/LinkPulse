@@ -55,21 +55,34 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ec2-key.pem
         chmod 600 ec2-key.pem
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+    
+          set -e
+    
+          IMAGE=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+    
+          echo "✅ Stopping any container running on port 80..."
+          CONTAINER_ON_80=\$(docker ps -q --filter "publish=80")
+          if [ ! -z "\$CONTAINER_ON_80" ]; then
+            docker stop \$CONTAINER_ON_80
+            docker rm \$CONTAINER_ON_80
+          fi
+    
+          echo "🧹 Removing old Docker images..."
+          docker image prune -af
+    
+          echo "🔐 Logging into ECR..."
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
           docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
-          docker pull ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+    
+          echo "📥 Pulling latest image: \$IMAGE"
+          docker pull \$IMAGE
+    
+          echo "🚀 Starting new container..."
+          docker run -d --name link-pulse-backend -p 80:8080 \$IMAGE
+EOF
 
+        rm -f ec2-key.pem
 
-          # Stop and remove old container
-          docker stop $CONTAINER_NAME || true
-          docker rm $CONTAINER_NAME || true
-
-          # Start new container
-          docker run -d --name $CONTAINER_NAME -p 80:8080 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG || exit 1
-        EOF
-
-    - name: Clean up key file
-      run: rm -f ec2-key.pem
 
   failure-handler:
     if: failure()
