@@ -45,7 +45,7 @@ func main() {
 	})
 
 	r.GET("/CICD", func(c *gin.Context) {
-		log.Println("CICD Completed, Let's Check")
+		log.Println("CICD Completed, Let's Check, i think now it's gonna work")
 		c.JSON(http.StatusOK, gin.H{
 			"message": "This was updated via CI/CD",
 		})
