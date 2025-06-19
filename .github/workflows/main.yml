@@ -53,16 +53,16 @@ jobs:
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" | base64 -d > ec2-key.pem
           chmod 600 ec2-key.pem
-          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+          ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
             set -e
 
             IMAGE=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
 
             echo "✅ Stopping any container running on port 80..."
-            CONTAINER_ON_80=$(docker ps -q --filter "publish=80")
-            if [ ! -z "$CONTAINER_ON_80" ]; then
-              docker stop $CONTAINER_ON_80
-              docker rm $CONTAINER_ON_80
+            CONTAINER_ON_80=\$(docker ps -q --filter "publish=80")
+            if [ ! -z "\$CONTAINER_ON_80" ]; then
+              docker stop \$CONTAINER_ON_80
+              docker rm \$CONTAINER_ON_80
             fi
 
             echo "🧹 Removing old Docker images..."
@@ -70,26 +70,23 @@ jobs:
 
             echo "🔐 Logging into ECR..."
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
-            docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+              docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
-            echo "📥 Pulling latest image: $IMAGE"
-            docker pull $IMAGE
+            echo "📥 Pulling latest image: \$IMAGE"
+            docker pull \$IMAGE
 
             echo "🚀 Starting new container..."
-            # Remove old container with the same name, if it exists
             docker rm -f link-pulse-backend || true
-            
-            # Now run fresh container
+
             docker run -d --name link-pulse-backend \
               -p 80:8080 \
               -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
               -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
               -e AWS_REGION=${{ secrets.AWS_REGION }} \
               \$IMAGE
-
-
-          '
+          EOF
           rm -f ec2-key.pem
+
 
   failure-handler:
     if: failure()
