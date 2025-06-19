@@ -62,6 +62,7 @@ func SignUp(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 
 		if !value {
 			c.JSON(400, gin.H{"error": "User already exists with some Credentials"})
+			return
 		}
 
 		log.Println("Stored User Successfully")
