@@ -1,0 +1,1 @@
+Naming Convention of the go tests should be Test as prefix for function names and the _test as suffix for the file names.
