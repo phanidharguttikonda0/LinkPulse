@@ -44,6 +44,13 @@ func main() {
 		})
 	})
 
+	r.GET("/CICD", func(c *gin.Context) {
+		log.Println("CICD Completed")
+		c.JSON(http.StatusOK, gin.H{
+			"message": "This was updated via CI/CD",
+		})
+	})
+
 	// Start server
 	r.Run(":8080") // default listens on 0.0.0.0:8080
 }
