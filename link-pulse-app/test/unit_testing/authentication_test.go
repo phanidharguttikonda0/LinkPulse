@@ -1,10 +1,10 @@
 package unit_testing
 
 import (
-	"errors"
 	"fmt"
 	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
-	"regexp"
+	"github.com/phanidharguttikonda0/LinkPulse/models"
+	"log"
 	"testing"
 )
 
@@ -20,62 +20,96 @@ func TestAuthorizationCheck(t *testing.T) {
 	fmt.Println(claims)
 }
 
-// Define your regex patterns (example patterns, adjust as needed)
-var (
-	UsernameRegex = regexp.MustCompile(`^[a-zA-Z0-9_]{3,16}$`)                             // Example: 3-16 alphanumeric or underscore
-	MobileRegex   = regexp.MustCompile(`^[0-9]{10}$`)                                      // Example: 10 digits
-	EmailRegex    = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`) // Standard email
-)
+func TestUserValidation(t *testing.T) {
+	user1 := &models.User{
+		Username: "test",
+		Password: "Phani",
+	}
 
-// User struct for sign-in
-type User struct {
-	Username string
-	Password string
-}
+	user2 := &models.User{
+		Username: "te",
+		Password: "PhaniPhani",
+	}
 
-// NewUser struct for sign-up
-type NewUser struct {
-	Username string
-	Password string
-	Mobile   string
-	MailId   string
-}
+	user3 := &models.User{
+		Username: "3test",
+		Password: "3PhaniPhani",
+	}
+	user4 := &models.User{
+		Username: "test(",
+		Password: "PhaniPhani",
+	}
+	user5 := &models.User{
+		Username: "test",
+		Password: "PhaniPhani",
+	}
 
-// isValid checks if a string matches a given regex
-func isValid(regex *regexp.Regexp, s string) bool {
-	return regex.MatchString(s)
-}
-
-// SignInValidation validates user sign-in credentials
-func (signIn *User) TestSignInValidation() (bool, error) {
-	if isValid(UsernameRegex, signIn.Username) {
-		if len(signIn.Password) >= 8 {
-			return true, nil
-		} else {
-			return false, errors.New("password should be at least 8 characters")
-		}
+	// first 4 test cases should fail and remaining to be passed
+	_, err1 := user1.SignInValidation()
+	_, err2 := user2.SignInValidation()
+	_, err3 := user3.SignInValidation()
+	_, err4 := user4.SignInValidation()
+	_, err5 := user5.SignInValidation()
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 == nil {
+		log.Println("Validation was success full")
 	} else {
-		return false, errors.New("username is invalid")
+		log.Println("err1", err1)
+		log.Println("err2", err2)
+		log.Println("err3", err3)
+		log.Println("err4", err4)
+		log.Println("err5", err5)
+		t.Errorf("User validation failed")
 	}
 }
 
-// SignUpValidation validates new user sign-up credentials
-func (signUp *NewUser) SignUpValidation() (bool, error) {
-	if isValid(UsernameRegex, signUp.Username) {
-		if len(signUp.Password) >= 8 {
-			if isValid(MobileRegex, signUp.Mobile) {
-				if isValid(EmailRegex, signUp.MailId) {
-					return true, nil
-				} else {
-					return false, errors.New("invalid mail id")
-				}
-			} else {
-				return false, errors.New("invalid mobile number")
-			}
-		} else {
-			return false, errors.New("password should be at least 8 characters")
-		}
+func TestSignUpValidation(t *testing.T) {
+	// here we are checking only mail id and mobile number
+	signIn := models.User{
+		Username: "test",
+		Password: "PhaniPhani",
+	}
+	user1 := &models.NewUser{
+		User:   signIn,
+		MailId: "phani<.123",
+		Mobile: "123123123",
+	}
+
+	user2 := &models.NewUser{
+		User:   signIn,
+		MailId: "phani.123.com",
+		Mobile: "123123123",
+	}
+
+	user3 := &models.NewUser{
+		User:   signIn,
+		MailId: "phani@123.com",
+		Mobile: "123123123",
+	}
+	user4 := &models.NewUser{
+		User:   signIn,
+		MailId: "phani@MIL.com",
+		Mobile: "123123123",
+	}
+	user5 := &models.NewUser{
+		User:   signIn,
+		MailId: "phani@mail.com",
+		Mobile: "+11123123123",
+	}
+
+	// first 4 test cases should fail and remaining to be passed
+	_, err1 := user1.SignUpValidation()
+	_, err2 := user2.SignUpValidation()
+	_, err3 := user3.SignUpValidation()
+	_, err4 := user4.SignUpValidation()
+	_, err5 := user5.SignUpValidation()
+	if err1 != nil && err2 != nil && err3 != nil && err4 != nil && err5 == nil {
+		log.Println("Validation was success full")
 	} else {
-		return false, errors.New("username is invalid")
+		log.Println("err1", err1)
+		log.Println("err2", err2)
+		log.Println("err3", err3)
+		log.Println("err4", err4)
+		log.Println("err5", err5)
+		t.Errorf("User validation failed")
 	}
 }
