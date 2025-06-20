@@ -68,7 +68,7 @@ func SignUp(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 		log.Println("Stored User Successfully")
 		log.Println("Going to get Authorization Header")
 
-		authorizationHeader, err := middlewares.CreateAuthorizationHeader(jwtSecret, id, data.Username)
+		authorizationHeader, err := middlewares.CreateAuthorizationHeader(jwtSecret, id, data.User.Username)
 		if err != nil {
 			log.Printf("Authorization error : %v\n", err)
 			c.JSON(400, gin.H{"error": err})
