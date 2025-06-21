@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/phanidharguttikonda0/LinkPulse/db"
 	_ "github.com/phanidharguttikonda0/LinkPulse/db"
+	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
 	"github.com/phanidharguttikonda0/LinkPulse/routes"
 	_ "github.com/phanidharguttikonda0/LinkPulse/routes"
 	"log"
@@ -12,7 +13,7 @@ import (
 
 func main() {
 	r := gin.Default()
-
+	r.Use(middlewares.RateLimiterMiddleware()) // it will be called for each route before being executed
 	log.Println("<UNK> Connected to RDS successfully!")
 	connection, jwtSecret := db.DatabaseConnections()
 	// log.Println(connection)
@@ -33,6 +34,12 @@ func main() {
 	}(connection)
 
 	routes.AuthenticationRoutes(r, connection, jwtSecret) // for each route we are going to pass the database connection from here
+
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Hello, World!",
+		})
+	})
 
 	// Start server
 	r.Run(":8080") // default listens on 0.0.0.0:8080
