@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
 	"log"
 	"regexp"
 )
@@ -48,7 +47,7 @@ func (signUp *NewUser) SignUpValidation() (bool, error) {
 		value := len(signUp.Mobile) - 10
 		CountryCode := signUp.Mobile[0:value]
 		log.Println("Country Code was", CountryCode)
-		if middlewares.IsCountryCodeCorrect(CountryCode) {
+		if IsCountryCodeCorrect(CountryCode) {
 			if isValid(EmailRegex, signUp.MailId) {
 				_, err := signUp.User.SignInValidation()
 				if err != nil {

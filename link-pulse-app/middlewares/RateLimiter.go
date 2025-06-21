@@ -20,7 +20,10 @@ func getLimiter(ip string) *rate.Limiter {
 	limiter, exists := visitors[ip]
 	if !exists {
 		/*
-			it allows only 1 request for 3 seconds and 20 requests a total for 1 minute
+			it allows only 20 requests per minute, if more than that then it stop working still next minute
+			Means once we sent 20 requests per minute then we need to wait for 3 seconds to empty one bucket ,
+			in total 1 minute need to be waited to send again 20 request continuously, else for every 3 seconds
+			we can send only one request if have doesn't wait
 		*/
 		limiter = rate.NewLimiter(rate.Every(time.Minute/20), 20)
 		visitors[ip] = limiter

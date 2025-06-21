@@ -16,9 +16,7 @@ func main() {
 	r.Use(middlewares.RateLimiterMiddleware()) // it will be called for each route before being executed
 	log.Println("<UNK> Connected to RDS successfully!")
 	connection, jwtSecret := db.DatabaseConnections()
-	// log.Println(connection)
 
-	// let's establish the connection
 	err := connection.Ping()
 	if err != nil {
 		log.Fatalf("failed to connect to RDS: %v", err)

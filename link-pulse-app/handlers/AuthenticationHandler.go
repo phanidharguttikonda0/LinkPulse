@@ -12,23 +12,8 @@ import (
 func SignIn(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		log.Println("Sign In Handler, Going to Call Validations")
-		var data models.User
-		if err := c.ShouldBind(&data); err != nil {
-			log.Printf("ShouldBind: %v\n", err)
-			c.JSON(400, gin.H{"error": err})
-			return
-		}
+		data := c.MustGet("data").(models.User)
 
-		_, err := data.SignInValidation()
-
-		if err != nil {
-			log.Printf("Validation error : %v\n", err)
-			c.JSON(400, gin.H{"error": err})
-			return
-		}
-		log.Println("Validation was Completed Successfully")
-		log.Println("Going to Call the Sign In Service")
 		value, id := services.CheckUser(db, &data)
 		if !value {
 			c.JSON(400, gin.H{"error": "Invalid Credentials"})
@@ -49,15 +34,9 @@ func SignIn(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 
 func SignUp(db *sql.DB, jwtSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		log.Println("Sign Up Handler, Going to Call Validations")
-		var data models.NewUser
-		if err := c.ShouldBind(&data); err != nil {
-			log.Printf("ShouldBind: %v\n", err)
-			c.JSON(400, gin.H{"error": err})
-			return
-		}
-		log.Println("Validation was Completed Successfully")
-		log.Println("Going to store the new user")
+
+		data := c.MustGet("data").(models.NewUser)
+
 		value, id := services.NewUser(db, &data)
 
 		if !value {
