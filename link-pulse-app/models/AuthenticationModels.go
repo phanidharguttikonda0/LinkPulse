@@ -8,14 +8,14 @@ import (
 )
 
 type NewUser struct {
-	User   User
-	MailId string `json:"mailId" form:"mailId"`
-	Mobile string `json:"mobile" form:"mobile"`
+	User   User   `form:"user"`
+	MailId string `form:"mailId"`
+	Mobile string `form:"mobile"`
 }
 
 type User struct {
-	Username string `json:"username" form:"username"`
-	Password string `json:"password" form:"password"`
+	Username string `form:"username"`
+	Password string `form:"password"`
 }
 
 // Starting with small case means private to the package , starting with Capital case are public and can be used
