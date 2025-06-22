@@ -30,7 +30,7 @@ func isValid(pattern string, value string) bool {
 }
 
 func (signIn *User) SignInValidation() (bool, error) {
-
+	log.Printf("username was %s and password was %s", signIn.Username, signIn.Password)
 	if isValid(UsernameRegex, signIn.Username) {
 		if len(signIn.Password) >= 8 {
 			return true, nil
@@ -43,7 +43,7 @@ func (signIn *User) SignInValidation() (bool, error) {
 }
 
 func (signUp *NewUser) SignUpValidation() (bool, error) {
-
+	log.Printf("Mobile was %s and MailId was %s", signUp.Mobile, signUp.MailId)
 	if isValid(MobileRegex, signUp.Mobile) {
 		// let's check is country id is valid or not
 		value := len(signUp.Mobile) - 10
