@@ -32,8 +32,8 @@ func TestSignUpHandler(t *testing.T) {
 	routes.AuthenticationRoutes(router, db, "phani")
 
 	form := url.Values{}
-	form.Set("user.username", "Phanidhar") // because of data bindings we need to user property name first
-	form.Set("user.password", "Phanidhar")
+	form.Set("username", "Phanidhar") // because of data bindings we need to user property name first
+	form.Set("password", "Phanidhar")
 	form.Set("mailId", "phanidhar@gmail.com")
 	form.Set("mobile", "+918885858760")
 
