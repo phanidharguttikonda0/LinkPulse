@@ -12,46 +12,6 @@ import (
 	"testing"
 )
 
-func TestSignInHandler(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-	log.Println("Test Mode was Set in SignInHandler")
-	db, err := DbConnection()
-	if err != nil {
-		t.Fatalf("Error connecting to test database: %v", err)
-	}
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-
-		}
-	}(db)
-
-	router := gin.Default()
-	log.Println("Specified Route by passing db and jwt secret")
-	routes.AuthenticationRoutes(router, db, "phani")
-	/*
-		Here we have set-up the actual routes, by calling the authentication routes
-	*/
-
-	form := url.Values{}
-	form.Set("username", "phanii")
-	form.Set("password", "Phanidhar")
-
-	req, _ := http.NewRequest("POST", "/authentication/sign-in", strings.NewReader(form.Encode()))
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-	resp := httptest.NewRecorder()
-	router.ServeHTTP(resp, req)
-	/*
-		📌 Sends the fake request to your Gin router and records the response in resp (acts like an in-memory HTTP server).
-	*/
-
-	if resp.Code != http.StatusOK {
-		t.Errorf("SignInHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
-	}
-
-}
-
 func TestSignUpHandler(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	log.Println("Test Mode was Set in SignUpHandler")
@@ -84,6 +44,46 @@ func TestSignUpHandler(t *testing.T) {
 	router.ServeHTTP(resp, req)
 	if resp.Code != http.StatusOK {
 		t.Errorf("SignUpHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
+	}
+
+}
+
+func TestSignInHandler(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	log.Println("Test Mode was Set in SignInHandler")
+	db, err := DbConnection()
+	if err != nil {
+		t.Fatalf("Error connecting to test database: %v", err)
+	}
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+
+		}
+	}(db)
+
+	router := gin.Default()
+	log.Println("Specified Route by passing db and jwt secret")
+	routes.AuthenticationRoutes(router, db, "phani")
+	/*
+		Here we have set-up the actual routes, by calling the authentication routes
+	*/
+
+	form := url.Values{}
+	form.Set("username", "Phanidhar")
+	form.Set("password", "Phanidhar")
+
+	req, _ := http.NewRequest("POST", "/authentication/sign-in", strings.NewReader(form.Encode()))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	resp := httptest.NewRecorder()
+	router.ServeHTTP(resp, req)
+	/*
+		📌 Sends the fake request to your Gin router and records the response in resp (acts like an in-memory HTTP server).
+	*/
+
+	if resp.Code != http.StatusOK {
+		t.Errorf("SignInHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
 	}
 
 }
