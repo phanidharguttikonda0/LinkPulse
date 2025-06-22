@@ -46,6 +46,13 @@ func TestSignUpHandler(t *testing.T) {
 		t.Errorf("SignUpHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
 	}
 
+	authHeader := resp.Header().Get("Authorization")
+	if authHeader == "" {
+		t.Errorf("Expected Authorization header in response, got none")
+	} else {
+		t.Logf("✅ Received Authorization header: %s", authHeader)
+	}
+
 }
 
 func TestSignInHandler(t *testing.T) {
@@ -84,6 +91,13 @@ func TestSignInHandler(t *testing.T) {
 
 	if resp.Code != http.StatusOK {
 		t.Errorf("SignInHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
+	}
+
+	authHeader := resp.Header().Get("Authorization")
+	if authHeader == "" {
+		t.Errorf("Expected Authorization header in response, got none")
+	} else {
+		t.Logf("✅ Received Authorization header: %s", authHeader)
 	}
 
 }
