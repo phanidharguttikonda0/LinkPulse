@@ -1,6 +1,7 @@
 package models
 
 import (
+	""
 	"errors"
 	"log"
 	"regexp"
@@ -8,14 +9,16 @@ import (
 
 type NewUser struct {
 	User   User
-	MailId string
-	Mobile string
+	MailId string `json:"mailId" form:"mailId"`
+	Mobile string `json:"mobile" form:"mobile"`
 }
 
 type User struct {
-	Username string
-	Password string
-} // Starting with small case means private to the package , starting with Capital case are public and can be used
+	Username string `json:"username" form:"username"`
+	Password string `json:"password" form:"password"`
+}
+
+// Starting with small case means private to the package , starting with Capital case are public and can be used
 // in any package so Username where starting was Capital so i can use it any package
 
 const EmailRegex = `^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`
