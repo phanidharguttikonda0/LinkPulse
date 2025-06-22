@@ -44,6 +44,8 @@ func (signIn *User) SignInValidation() (bool, error) {
 
 func (signUp *NewUser) SignUpValidation() (bool, error) {
 	log.Printf("Mobile was %s and MailId was %s", signUp.Mobile, signUp.MailId)
+	log.Println("The Sign Up was ", signUp)
+	log.Printf("Username was %s and the Password was %s ", signUp.User.Username, signUp.User.Password)
 	if isValid(MobileRegex, signUp.Mobile) {
 		// let's check is country id is valid or not
 		value := len(signUp.Mobile) - 10
