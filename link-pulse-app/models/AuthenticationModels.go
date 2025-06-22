@@ -17,6 +17,7 @@ type User struct {
 	Password string `form:"password"`
 }
 
+// now we need to username or Username as we mentioned in struct tags
 // Starting with small case means private to the package , starting with Capital case are public and can be used
 // in any package so Username where starting was Capital so i can use it any package
 
