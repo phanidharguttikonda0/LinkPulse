@@ -12,7 +12,7 @@ import (
 
 func AuthorizationCheckMiddleware(secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		AuthorizationHeader := c.GetHeader("authorization")
+		AuthorizationHeader := c.GetHeader("Authorization")
 		claims, err := AuthorizationCheck(secret, AuthorizationHeader)
 		if err != nil {
 			log.Printf("AuthorizationCheck: %v\n", err)
