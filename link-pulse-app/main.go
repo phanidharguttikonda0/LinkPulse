@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/phanidharguttikonda0/LinkPulse/db"
 	_ "github.com/phanidharguttikonda0/LinkPulse/db"
@@ -14,12 +13,6 @@ import (
 
 func main() {
 
-	header, errr := middlewares.CreateAuthorizationHeader("phani", 1, "Phanidhar")
-	if errr != nil {
-		log.Fatal(errr)
-	} else {
-		fmt.Println("header: ", header)
-	}
 	r := gin.Default()
 	r.Use(middlewares.RateLimiterMiddleware()) // it will be called for each route before being executed
 	log.Println("<UNK> Connected to RDS successfully!")

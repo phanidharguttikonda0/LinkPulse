@@ -13,6 +13,7 @@ import (
 func AuthorizationCheckMiddleware(secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		AuthorizationHeader := c.GetHeader("Authorization")
+		log.Println("Authorization header was : ", AuthorizationHeader)
 		claims, err := AuthorizationCheck(secret, AuthorizationHeader)
 		if err != nil {
 			log.Printf("AuthorizationCheck: %v\n", err)
@@ -41,6 +42,7 @@ func AuthorizationCheckMiddleware(secret string) gin.HandlerFunc {
 
 func AuthorizationCheck(secret string, authorizationHeader string) (jwt.MapClaims, error) {
 	jwtSecret := []byte(secret)
+	log.Println("Specified JWT Secret")
 	token, err := jwt.Parse(authorizationHeader, func(token *jwt.Token) (interface{}, error) {
 		// validating signing method
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

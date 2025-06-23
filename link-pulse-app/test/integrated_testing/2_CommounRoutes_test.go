@@ -3,7 +3,9 @@ package integrated_testing
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
 	"github.com/phanidharguttikonda0/LinkPulse/routes"
 	"log"
 	"net/http"
@@ -31,9 +33,14 @@ func TestIsPremiumRoute(t *testing.T) {
 
 	router := gin.Default()
 	routes.CommonRoutes(router, db, "phani")
-
+	header, errr := middlewares.CreateAuthorizationHeader("phani", 1, "Phanidhar")
+	if errr != nil {
+		log.Fatal(errr)
+	} else {
+		fmt.Println("header: ", header)
+	}
 	req, _ := http.NewRequest("GET", "/common/is-premium/1", nil)
-	req.Header.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA3Njc0NTksInVzZXJJZCI6MSwidXNlcm5hbWUiOiJQaGFuaWRoYXIifQ.yze0JE9UQvYo69G7It3rTNSJ7o5BAcgxAVjUzZ59X7s") // it was a created authorized key
+	req.Header.Add("Authorization", header) // it was a created authorized key
 	resp := httptest.NewRecorder()
 
 	router.ServeHTTP(resp, req)
