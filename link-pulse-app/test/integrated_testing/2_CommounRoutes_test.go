@@ -33,7 +33,7 @@ func TestIsPremiumRoute(t *testing.T) {
 	routes.CommonRoutes(router, db, "phani")
 
 	req, _ := http.NewRequest("GET", "/common/is-premium/1", nil)
-	req.Header.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA3NjU5OTQsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJQaGFuaWRoYXIifQ.WtoS0hxkPuoDtj0KudURYsOVTLCd4i3K1gy9S-_zuSk") // it was a created authorized key
+	req.Header.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA3Njc0NTksInVzZXJJZCI6MSwidXNlcm5hbWUiOiJQaGFuaWRoYXIifQ.yze0JE9UQvYo69G7It3rTNSJ7o5BAcgxAVjUzZ59X7s") // it was a created authorized key
 	resp := httptest.NewRecorder()
 
 	router.ServeHTTP(resp, req)
