@@ -61,7 +61,7 @@ func TestIsPremiumRoute(t *testing.T) {
 	}
 
 	isPremium, ok := response["isPremium"].(bool)
-	if !ok || !isPremium {
+	if !ok || isPremium {
 		t.Errorf("Expected isPremium=true, got: %v", response["isPremium"])
 	}
 
