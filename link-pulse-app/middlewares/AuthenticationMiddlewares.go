@@ -27,8 +27,8 @@ func AuthorizationCheckMiddleware(secret string) gin.HandlerFunc {
 			return
 		}
 
-		userId, ok := claims["userId"].(int)
-
+		userIdd, ok := claims["userId"].(float64) // go parses in to float64
+		var userId int = int(userIdd)
 		if !ok {
 			log.Println("Unable to get userId from the claims")
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid Authorization Header"})
