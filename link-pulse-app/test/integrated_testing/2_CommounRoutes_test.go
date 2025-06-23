@@ -24,7 +24,7 @@ func TestIsPremiumRoute(t *testing.T) {
 	var userId int
 	// Insert user required for the test
 	err = db.QueryRow(`INSERT INTO Users (username, password, mail_id, mobile, premium) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-		"Phaniidhar", "Phaniidhar", "phanidhar@gmail.com", "+918885758760", "0").Scan(&userId)
+		"Phaniidhar", "Phaniidhar", "phanidharreddy@gmail.com", "+918885758760", "0").Scan(&userId)
 	if err != nil {
 		t.Fatalf("Failed to insert user: %v", err)
 		return
