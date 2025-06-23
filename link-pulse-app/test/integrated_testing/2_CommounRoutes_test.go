@@ -32,14 +32,14 @@ func TestIsPremiumRoute(t *testing.T) {
 	router := gin.Default()
 	routes.CommonRoutes(router, db, "phani")
 
-	req, _ := http.NewRequest("GET", "/is-premium/1", nil)
+	req, _ := http.NewRequest("GET", "/common/is-premium/1", nil)
 	req.Header.Add("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTA3NjU5OTQsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJQaGFuaWRoYXIifQ.WtoS0hxkPuoDtj0KudURYsOVTLCd4i3K1gy9S-_zuSk") // it was a created authorized key
 	resp := httptest.NewRecorder()
 
 	router.ServeHTTP(resp, req)
 	if resp.Code != http.StatusOK {
 		t.Errorf("SignUpHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
-
+		return
 	}
 	log.Println("The response was ")
 	log.Println(resp.Result())
@@ -49,6 +49,7 @@ func TestIsPremiumRoute(t *testing.T) {
 	contentType := resp.Header().Get("Content-Type")
 	if !strings.Contains(contentType, "application/json") {
 		t.Errorf("Expected Content-Type application/json, got %s", contentType)
+		return
 	}
 
 	// Body JSON Check
