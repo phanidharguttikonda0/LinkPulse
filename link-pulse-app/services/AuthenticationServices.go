@@ -10,8 +10,8 @@ import (
 func NewUser(db *sql.DB, signUp *models.NewUser) (bool, int) {
 	log.Println("Inserting a new User")
 	var id int
-	query := `insert into Users (mail_id, mobile, username, password, premium) values ($1, $2, $3, $4, $5) returning id`
-	err := db.QueryRow(query, signUp.MailId, signUp.Mobile, signUp.User.Username, signUp.User.Password, "0").Scan(&id)
+	query := `insert into Users (mail_id, mobile, username, password) values ($1, $2, $3, $4) returning id`
+	err := db.QueryRow(query, signUp.MailId, signUp.Mobile, signUp.User.Username, signUp.User.Password).Scan(&id)
 	if err != nil {
 		log.Printf("Error while inserting user: %v", err)
 		return false, -1

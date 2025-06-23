@@ -27,6 +27,8 @@ func AuthorizationCheckMiddleware(secret string) gin.HandlerFunc {
 			return
 		}
 
+		// why while parsing int type claims also it converts to float64 ?
+		// it's because of due to JSON decoding by default
 		userIdd, ok := claims["userId"].(float64) // go parses in to float64
 		var userId int = int(userIdd)
 		if !ok {
