@@ -1,13 +1,10 @@
 package integrated_testing
 
 import (
-	"database/sql"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
 	"github.com/phanidharguttikonda0/LinkPulse/routes"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -16,50 +13,47 @@ import (
 
 // jwt secret was "phani" in over all the tests
 func TestIsPremiumRoute(t *testing.T) {
-	// 2 routes one
 	gin.SetMode(gin.TestMode)
 
 	db, err := DbConnection()
 	if err != nil {
 		t.Fatalf("Error connecting to test database: %v", err)
 	}
-
-	defer func(conn *sql.DB) {
-		err := conn.Close()
-		if err != nil {
-			t.Errorf("Error closing connection: %v", err)
-		}
-	}(db)
+	defer db.Close()
+	// we don't know in which order does the tests execute so pushing to the database
+	var userId int
+	// Insert user required for the test
+	err = db.QueryRow(`INSERT INTO Users (username, password, mail_id, mobile, premium) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+		"Phaniidhar", "Phaniidhar", "phanidhar@gmail.com", "+918885758760", "0").Scan(&userId)
+	if err != nil {
+		t.Fatalf("Failed to insert user: %v", err)
+		return
+	}
 
 	router := gin.Default()
 	routes.CommonRoutes(router, db, "phani")
-	header, errr := middlewares.CreateAuthorizationHeader("phani", 1, "Phanidhar")
-	if errr != nil {
-		log.Fatal(errr)
-	} else {
-		fmt.Println("header: ", header)
+
+	// Generate valid token
+	header, err := middlewares.CreateAuthorizationHeader("phani", userId, "Phaniidhar")
+	if err != nil {
+		t.Fatalf("Failed to create Authorization header: %v", err)
 	}
+
 	req, _ := http.NewRequest("GET", "/common/is-premium/1", nil)
-	req.Header.Add("Authorization", header) // it was a created authorized key
+	req.Header.Add("Authorization", header)
+
 	resp := httptest.NewRecorder()
-
 	router.ServeHTTP(resp, req)
-	if resp.Code != http.StatusOK {
-		t.Errorf("SignUpHandler returned wrong status code: got %v want %v", resp.Code, http.StatusOK)
-		return
-	}
-	log.Println("The response was ")
-	log.Println(resp.Result())
-	log.Println("Let's Check the Result ")
 
-	// Header Check
+	if resp.Code != http.StatusOK {
+		t.Errorf("Expected status 200, got %d", resp.Code)
+	}
+
 	contentType := resp.Header().Get("Content-Type")
 	if !strings.Contains(contentType, "application/json") {
 		t.Errorf("Expected Content-Type application/json, got %s", contentType)
-		return
 	}
 
-	// Body JSON Check
 	var response map[string]interface{}
 	err = json.Unmarshal(resp.Body.Bytes(), &response)
 	if err != nil {
@@ -71,4 +65,6 @@ func TestIsPremiumRoute(t *testing.T) {
 		t.Errorf("Expected isPremium=true, got: %v", response["isPremium"])
 	}
 
+	// Clean up DB
+	_, _ = db.Exec(`DELETE FROM users WHERE id = $1`, 1)
 }
