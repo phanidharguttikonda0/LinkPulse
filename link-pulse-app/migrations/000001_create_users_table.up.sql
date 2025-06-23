@@ -5,8 +5,8 @@ CREATE TABLE Users (
                        mobile VARCHAR(13) UNIQUE NOT NULL,
                        username VARCHAR(25) UNIQUE NOT NULL,
                        password VARCHAR(20) NOT NULL,
-                       premium VARCHAR(1),
-                       expiry Date,
+                       premium VARCHAR(1) NOT NULL, -- here 0 means free user , 1 means only for website urls, 2 for only file sharing, 3 for both
+                       expiry TIMESTAMP,
                        totalspace_consumed FLOAT NOT NULL DEFAULT 0
 );
 
