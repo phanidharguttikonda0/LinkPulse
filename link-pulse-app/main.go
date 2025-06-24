@@ -38,7 +38,8 @@ func main() {
 	routes.CommonRoutes(r, connection, jwtSecret)
 
 	// number 1 represents whether the user has premium for the website insights
-	r.GET("/:urlName", middlewares.AuthorizationCheckMiddleware(jwtSecret), middlewares.IsPremiumCheck(connection, "1"), RedirectUrl(connection))
+	r.GET("/:name", middlewares.AuthorizationCheckMiddleware(jwtSecret), middlewares.CustomNameValidationMiddlewareGet(), middlewares.IsPremiumCheck(connection, "1"), RedirectUrl(connection))
+	// name is nothing but the shorten url
 
 	// Start server
 	r.Run(":8080") // default listens on 0.0.0.0:8080
@@ -47,7 +48,7 @@ func main() {
 func RedirectUrl(db *sql.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		premium := c.MustGet("premium").(bool)
-		url := c.Param("urlName")
+		url := c.Param("name")
 		log.Println("got the Url", url)
 		// here we are going to just increment the count that's it not more than that
 		original, err := services.GetOriginalUrl(db, url)

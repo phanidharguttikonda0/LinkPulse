@@ -15,8 +15,16 @@ import (
 
 func PostUrlShortner(db *sql.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
+
+		url := c.Query("url")
+
+		if url == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "url query parameter is required"})
+			return
+		}
+
 		CustomName := c.MustGet("CustomName").(string)
-		url := c.Param("url")
+
 		userId := c.MustGet("UserId").(int)
 
 		ShortenUrl, err := services.NewUrl(db, url, CustomName, userId)
@@ -33,7 +41,13 @@ func PostUrlShortner(db *sql.DB) func(c *gin.Context) {
 // UrlShortner In front-end we need attach domain/shorten_url
 func UrlShortner(db *sql.DB) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		url := c.Param("url")
+		url := c.Query("url")
+
+		if url == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "url query parameter is required"})
+			return
+		}
+
 		userId := c.MustGet("UserId").(int)
 		var finalHash string
 		// here we are going to generate a unique name using the original url along with current time stamp an hash of it
