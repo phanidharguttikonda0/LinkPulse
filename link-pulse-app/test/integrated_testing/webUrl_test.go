@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestingWebsiteUrls(t *testing.T) {
+func TestingwebsiteUrls(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	db, err := DbConnection()
