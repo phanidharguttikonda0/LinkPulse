@@ -8,6 +8,7 @@ import (
 	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
 	"github.com/phanidharguttikonda0/LinkPulse/routes"
 	_ "github.com/phanidharguttikonda0/LinkPulse/routes"
+	"github.com/phanidharguttikonda0/LinkPulse/services"
 	"log"
 )
 
@@ -49,10 +50,20 @@ func RedirectUrl(db *sql.DB) func(c *gin.Context) {
 		url := c.Param("urlName")
 		log.Println("got the Url", url)
 		// here we are going to just increment the count that's it not more than that
-
-		if premium {
-			// here we are going get the Ip address and all the other stuff
+		original, err := services.GetOriginalUrl(db, url)
+		if err != nil {
+			log.Printf("failed to retrieve originalUrl: %v because of the following ", err)
+			c.Redirect(302, "/")
+			return
 		}
-		// here we will finally do the re-direction
+
+		c.Redirect(302, original)
+		// after re-direction we will store remaining things such that latency will improve
+		if premium {
+			log.Println("It's a Premium Users Link")
+			// here we are going get the Ip address and all the other stuff
+			services.StoringPremiumUserInsights()
+		}
+		return
 	}
 }

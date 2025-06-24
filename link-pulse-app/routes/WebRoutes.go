@@ -10,6 +10,8 @@ import (
 func WebRoutes(r *gin.Engine, db *sql.DB, jwtSecret string) {
 	webRoutes := r.Group("/website")
 	webRoutes.GET("/url-shortner/:url", middlewares.AuthorizationCheckMiddleware(jwtSecret), handlers.UrlShortner(db))
-	webRoutes.POST("/url-shortner/:url", middlewares.AuthorizationCheckMiddleware(jwtSecret), handlers.PostUrlShortner(db))
-	webRoutes.GET("/custom-check/:name", middlewares.AuthorizationCheckMiddleware(jwtSecret), handlers.CheckCustomName(db))
+	webRoutes.POST("/url-shortner/:url", middlewares.AuthorizationCheckMiddleware(jwtSecret),
+		middlewares.CustomNameValidationMiddleware(), handlers.PostUrlShortner(db))
+	webRoutes.GET("/custom-check/:name", middlewares.AuthorizationCheckMiddleware(jwtSecret),
+		middlewares.CustomNameValidationMiddlewareGet(), handlers.CheckCustomName(db))
 }

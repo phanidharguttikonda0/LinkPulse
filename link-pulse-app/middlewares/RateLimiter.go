@@ -25,7 +25,7 @@ func getLimiter(ip string) *rate.Limiter {
 			in total 1 minute need to be waited to send again 20 request continuously, else for every 3 seconds
 			we can send only one request if have doesn't wait
 		*/
-		limiter = rate.NewLimiter(rate.Every(time.Minute/20), 20)
+		limiter = rate.NewLimiter(rate.Every(time.Minute/30), 30)
 		visitors[ip] = limiter
 	}
 	return limiter
