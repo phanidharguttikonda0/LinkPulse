@@ -63,7 +63,7 @@ func TestWebsiteUrls(t *testing.T) {
 		return
 	}
 
-	req2, _ := http.NewRequest("GET", "/website/", nil)
+	req2, _ := http.NewRequest("GET", "/website/url-shortner?url=https://github.com/phanidharguttikonda0/LinkPulse/actions", nil)
 	req2.Header.Add("Authorization", header)
 
 	resp2 := httptest.NewRecorder()
