@@ -41,7 +41,7 @@ func GetOriginalUrl(db *sql.DB, ShortenUrl string) (string, error) {
     SET clicks = clicks + 1
     WHERE shorten_url = $1
     RETURNING original_url
-`, ShortenURL).Scan(&originalURL)
+`, ShortenUrl).Scan(&originalURL)
 
 	if err != nil {
 		log.Println("Error occurred while Getting OriginalUrl ", err)
