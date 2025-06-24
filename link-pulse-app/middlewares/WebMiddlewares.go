@@ -20,7 +20,7 @@ func CustomNameValidationMiddleware() gin.HandlerFunc {
 		}
 		value := CustomNameValidation(customName.Name)
 		if value {
-			c.Set("CustomName", customName)
+			c.Set("CustomName", customName.Name)
 			c.Next()
 		} else {
 			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": "CustomName validation failed"})
