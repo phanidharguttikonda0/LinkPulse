@@ -58,8 +58,8 @@ func TestWebsiteUrls(t *testing.T) {
 	resp1 := httptest.NewRecorder()
 	router.ServeHTTP(resp1, req1)
 
-	if resp1.Code != http.StatusOK {
-		t.Errorf("Expected status 200, for resp1 but got %d", resp1.Code)
+	if resp1.Code != http.StatusCreated {
+		t.Errorf("Expected status 201, for resp1 but got %d", resp1.Code)
 		return
 	}
 
@@ -69,8 +69,8 @@ func TestWebsiteUrls(t *testing.T) {
 	resp2 := httptest.NewRecorder()
 	router.ServeHTTP(resp2, req2)
 
-	if resp2.Code != http.StatusOK {
-		t.Errorf("Expected status 200 for resp2 but, got the following %d", resp2.Code)
+	if resp2.Code != http.StatusCreated {
+		t.Errorf("Expected status 201 for resp2 but, got the following %d", resp2.Code)
 		return
 	}
 
