@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestingcustomName(t *testing.T) {
+func TestCustomName(t *testing.T) {
 	correctName := "phani"
 	wrongName1 := "phani is "
 	wrongName2 := "ph"
