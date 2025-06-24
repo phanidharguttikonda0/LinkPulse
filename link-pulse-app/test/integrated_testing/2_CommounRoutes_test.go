@@ -1,6 +1,7 @@
 package integrated_testing
 
 import (
+	"database/sql"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/phanidharguttikonda0/LinkPulse/middlewares"
@@ -19,7 +20,13 @@ func TestIsPremiumRoute(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error connecting to test database: %v", err)
 	}
-	defer db.Close()
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			t.Errorf("Error closing db: %v", err)
+			return
+		}
+	}(db)
 	// we don't know in which order does the tests execute so pushing to the database
 	var userId int
 	// Insert user required for the test
