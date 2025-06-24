@@ -25,7 +25,7 @@ func PostUrlShortner(db *sql.DB) func(c *gin.Context) {
 
 		CustomName := c.MustGet("CustomName").(string)
 
-		userId := c.MustGet("UserId").(int)
+		userId := c.MustGet("userId").(int)
 
 		ShortenUrl, err := services.NewUrl(db, url, CustomName, userId)
 		if err != nil {
@@ -48,7 +48,7 @@ func UrlShortner(db *sql.DB) func(c *gin.Context) {
 			return
 		}
 
-		userId := c.MustGet("UserId").(int)
+		userId := c.MustGet("userId").(int)
 		var finalHash string
 		// here we are going to generate a unique name using the original url along with current time stamp an hash of it
 
